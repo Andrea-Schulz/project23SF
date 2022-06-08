@@ -11,6 +11,7 @@ __pycache__/
 *.log
 .github
 dataset/
+results/
 
 ################################
 
