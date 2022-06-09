@@ -12,6 +12,7 @@ __pycache__/
 .github
 dataset/
 results/
+*.pth
 
 ################################
 
