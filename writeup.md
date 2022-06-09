@@ -3,10 +3,10 @@
 ## Mid-term Project: 3D Object Detection
 
 The mid-term project is divided into 4 sections:
-* Computing a Lidar Point-Cloud (PCL) from a Range Image
-* Creating a Birds-Eye View (BEV) from a Lidar PCL
-* Model-based Object Detection in the BEV Image
-* Performance Evaluation for Object Detection
+* Computing a Lidar Point-Cloud (PCL) from a Range Image (ID_S1_EX1 & ID_S1_EX2)
+* Creating a Birds-Eye View (BEV) from a Lidar PCL (ID_S2_EX1 - ID_S2_EX3)
+* Model-based Object Detection in the BEV Image (ID_S3_EX1 & ID_S3_EX2)
+* Performance Evaluation for Object Detection (ID_S4_EX1 - ID_S4_EX3)
 
 ### Setup & Usage
 
@@ -16,19 +16,58 @@ To run the code, execute the `loop_over_dataset.py`, e.g. via:
 ````
 python -m loop_over_dataset
 ````
-Within `loop_over_dataset.py`, please set the variable `exercise` in line 56 to the respective value.
+Within `loop_over_dataset.py`, please set the variable `exercise` in line 56 to the respective exercise ID (e.g. "ID_S4_EX1").
 
 This way, you can set the script to execute different routines on selected measurement sequences from the [Waymo Open Dataset](https://waymo.com/open/) 
 with adjustable settings, e.g. loading detections from file a pre-trained model or executing the object detection using a pre-trained model.
 
 Outputs used for the project evaluation are stored within the `custom_plots` folder.
 
+In order to jump to the respective code written for an exercise, a file search can be performed using the exercise ID.
+
+### Results
+
+Below images are example outputs deriven from executing `loop_over_dataset.py` with the given parameters for each exercise.
+
+#### Computing a Lidar Point-Cloud (PCL) from a Range Image (ID_S1_EX1 & ID_S1_EX2)
+
+Please refer to the next chapter for a detailed Evaluation of a point cloud visualizations.
+
+![](custom_plots/stacked_range_imagetraining_segment-1005081002024129653_5313_150_5333_150_with_camera_labels.tfrecord.jpg)
+*range image with height (top) and intensity (bottom) for a frame in measurement sequence 1*
+
+![](custom_plots/pcl_top.jpg)
+*top view of the respective point cloud (PCL) for a frame in measurement sequence 3*
+
+#### Creating a Birds-Eye View (BEV) from a Lidar PCL (ID_S2_EX1 - ID_S2_EX3)
+
+![](custom_plots/bev_height_intensity.png)
+*intensity and height channel of the BEV map for a frame in measurement sequence 1*
+
+#### Model-based Object Detection in the BEV Image (ID_S3_EX1 & ID_S3_EX2)
+
+![](custom_plots/object_detection_bev.jpg)
+*objects visible in the camera image and the respective BEV for a frame in measurement sequence 1 (resnet)*
+
+#### Performance Evaluation for Object Detection (ID_S4_EX1 - ID_S4_EX3)
+
+![](custom_plots/precision_recall_50-150.png)
+*performance results for 100 example frames for measurement sequence 1 (resnet)*
+
+![](custom_plots/precision_recall_50-150_value.jpg)
+*precision & recall value for 100 example frames for measurement sequence 1 (resnet)*
+
+![](custom_plots/precision_recall_validation.png)
+*performance results validation using the ground truth labels for 10 frames in measurement sequence 1*
+
+![](custom_plots/precision_recall_validation_value.jpg)
+*performance results validation using the ground truth labels for 10 frames in measurement sequence 1*
+
 ### Evaluation
 
 #### Vehicle & Feature Visibility in the Point Cloud and Intensity Channel
 
 The top view of the point cloud (PCL) for measurement sequence 3 reveals the Self-Driving Car (SDC) to be in the middle of a crossroad, on its way to leave it.
-
 
 While the lane the SDC is driving on seems to be free in the area directly in front of the SDC, 
 multiple vehicles can be seen in the scene in general.

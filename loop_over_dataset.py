@@ -53,7 +53,7 @@ import misc.params as params
     # exec_tracking options: 'perform_tracking'
     # exec_visualization options: 'show_range_image', 'show_bev', 'show_pcl', 'show_labels_in_image', 'show_objects_and_labels_in_bev', 'show_objects_in_bev_labels_in_camera', 'show_tracks', 'show_detection_performance', 'make_tracking_movie'
     # configs_det options: 'darknet', 'fpn_resnet'
-exercise = 'ID_S4_EX1'
+exercise = 'ID_S4_EX3'
 if exercise == 'ID_S1_EX1':
     data_filename = 'training_segment-1005081002024129653_5313_150_5333_150_with_camera_labels.tfrecord'  # Sequence 1
     show_only_frames = [0, 1]  # show only frames in interval for debugging
@@ -84,15 +84,15 @@ if exercise == 'ID_S4_EX1' or exercise == 'ID_S4_EX2':
                                                                    ['bev_from_pcl', 'detect_objects', 'validate_object_labels', 'measure_detection_performance'], \
                                                                    [], \
                                                                    ['show_detection_performance']
-    configs_det = det.load_configs(model_name="darknet")
+    configs_det = det.load_configs(model_name="fpn_resnet")
 if exercise == 'ID_S4_EX3':
     data_filename = 'training_segment-1005081002024129653_5313_150_5333_150_with_camera_labels.tfrecord'  # Sequence 1
-    show_only_frames = [50, 150]  # show only frames in interval for debugging
+    show_only_frames = [50, 60]  # show only frames in interval for debugging
     exec_data, exec_detection, exec_tracking, exec_visualization = ['pcl_from_rangeimage'], \
                                                                    ['bev_from_pcl', 'detect_objects', 'validate_object_labels', 'measure_detection_performance'], \
                                                                    [], \
                                                                    ['show_detection_performance']
-    configs_det = det.load_configs(model_name="darknet")
+    configs_det = det.load_configs(model_name="fpn_resnet")
     # uncomment the following line for validating the calculations
     # configs_det.use_labels_as_objects = True
 
@@ -104,7 +104,7 @@ datafile_iter = iter(datafile)  # initialize dataset iterator
 
 ## Initialize object detection
 model_det = det.create_model(configs_det)
-configs_det.use_labels_as_objects = False # set to True: use groundtruth labels as objects (False: use model-based detection)
+configs_det.use_labels_as_objects = True # set to True: use groundtruth labels as objects (False: use model-based detection)
 
 ## Uncomment this setting to restrict the y-range in the final project
 # configs_det.lim_y = [-25, 25] 
