@@ -12,6 +12,8 @@ __pycache__/
 .github
 dataset/
 results/
+tools/objdet_models/darknet/pretrained/
+tools/objdet_models/resnet/pretrained/
 *.pth
 
 ################################
