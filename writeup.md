@@ -18,14 +18,20 @@ python -m loop_over_dataset
 ````
 Within `loop_over_dataset.py`, please set the variable `exercise` in line 56 to the respective value.
 
+This way, you can set the script to execute different routines on selected measurement sequences from the [Waymo Open Dataset](https://waymo.com/open/) 
+with adjustable settings, e.g. loading detections from file a pre-trained model or executing the object detection using a pre-trained model.
+
 Outputs used for the project evaluation are stored within the `custom_plots` folder.
 
 ### Evaluation
 
 #### Vehicle & Feature Visibility in the Point Cloud and Intensity Channel
 
-The top view of the point cloud for measurement sequence 3 reveals the Self-Driving Car (SDC) to be in the middle of a crossroad, on its way to leave it.
-While the lane the SDC is driving on seems to be free in the area directly in front of the SDC, multiple vehicles can be seen in the scene in general:
+The top view of the point cloud (PCL) for measurement sequence 3 reveals the Self-Driving Car (SDC) to be in the middle of a crossroad, on its way to leave it.
+
+
+While the lane the SDC is driving on seems to be free in the area directly in front of the SDC, 
+multiple vehicles can be seen in the scene in general.
 in front of the the SDC, there are a couple of vehicles in close distance, going both in the neighbouring and oncoming lane.
 In the back and on the sides, there are multiple vehicles approaching the crossroad, as well as some vehicles standing on what seems to be a parking lot:
 
