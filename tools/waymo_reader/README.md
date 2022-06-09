@@ -4,7 +4,7 @@ This is a simple file reader for the [Waymo Open Dataset](https://waymo.com/open
 
 ## Installation
 
-Use the provided `setup.py`:
+From the directory `tools/waymo_reader`, use the provided `setup.py`:
 
 ```
 python setup.py install
