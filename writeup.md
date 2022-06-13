@@ -168,9 +168,15 @@ Other relevant files are:
 *object bounding box in camera view using an EKF in measurement sequence 2*
 
 ![](custom_plots/Filter_2.png)
-*respective EKF performance given by the Root Mean Square Error (RMSE) in measurement sequence 2*
+*respective Tracking performance given by the Root Mean Square Error (RMSE) in measurement sequence 2*
 
 #### Track Management Implementation
+
+![](custom_plots/Trackmanagement_1.png)
+*confirmed object in camera view using Track Management in measurement sequence 2*
+
+![](custom_plots/Trackmanagement_2.png)
+*respective Tracking performance given by the Root Mean Square Error (RMSE) in measurement sequence 2*
 
 #### Single Nearest Neighbour (SNN) Data Association & Gating Implementaion
 
