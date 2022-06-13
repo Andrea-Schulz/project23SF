@@ -94,9 +94,7 @@ class Track:
             self.height = c*meas.height + (1 - c)*self.height
             M_rot = meas.sensor.sens_to_veh
             self.yaw = np.arccos(M_rot[0,0]*np.cos(meas.yaw) + M_rot[0,1]*np.sin(meas.yaw)) # transform rotation from sensor to vehicle coordinates
-        
-        
-###################        
+
 
 class Trackmanagement:
     '''Track manager with logic for initializing and deleting objects'''
