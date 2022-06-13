@@ -129,57 +129,59 @@ If a vehicle is captured from the side by the LiDAR, wheel rims are distinguisha
 ![](custom_plots/example_intensity.png)
 *Detail views from the height/intensity map, showing the front and back features of vehicles (boxes) and the wheel rime (circles)*
 
+## Final Project: Sensor Fusion and Object Tracking
+
+The mid-term project is divided into 4 sections:
+* Implementing an extended Kalman filter (EKF)
+* Implementing a track management including track state and track score, track initialization and deletion
+* Implementing single nearest neighbour data association and gating
+* Apply sensor fusion by implementing the nonlinear camera measurement model and a sensor visibility check
+
+### Setup & Usage
+
+Please refer to Udacity's [README](README.md) file for general setup, requirements and dependencies.
+
+Otherwise, setup and usage for the final project work the same way as for the mid-term project (see above):
+to run the code and process each measurement frame, execute the `loop_over_dataset.py` script.
+
+The final project uses *pre-computed lidar detections*, which can be downloaded [here](https://drive.google.com/drive/folders/1IkqFGYTF6Fh_d8J3UjQOSNJ2V42UDZpO), 
+in order for all students to have the same input data.
+
+Other relevant files are:
+
+* `student/filter.py` contains the EKF class including the predict and update step
+* `student/trackmanagement.py` includes two classes for tracking:
+	* class `Track` with attributes **x** and **P** for state and covariance
+	* class `Trackmanagement` with a `track_list` to store all tracks, as well as methods to manage tracks
+* `student/association.py` includes a class `Association` with logic to associate tracks to measurements and call the EKF update function with these associated measurements in `associate_and_update()`
+* `student/measurements.py` includes two classes for measurement handling:
+	* class `Sensor` to distinguish between camera and lidar and include the sensor's calibration data, field of view (FOV) and coordinate transforms as well as the EKF measurement model
+	* class `Measurement` with the attributes **z** and **R** for the measurement vector and corresponding covariance
+* `misc/params.py` includes all parameters for tracking (e.g. timestep, initialization parameters, track management settings, gating threshold)
 
 
+### 1. Tracking Steps
+
+Write a short recap of the four tracking steps and what you implemented there (filter, track management, association, camera fusion).
+
+* Which results did you achieve?
+
+* Which part of the project was most difficult for you to complete, and why?
 
 
+### 2. Comparison
+
+Do you see any benefits in camera-lidar fusion compared to lidar-only tracking (in theory and in your concrete results)? 
 
 
+### 3. Challenges
+
+Which challenges will a sensor fusion system face in real-life scenarios?
+
+Did you see any of these challenges in the project?
 
 
+### 4. Improvements
 
+Can you think of ways to improve your tracking results in the future?
 
-
-
-
-
-
-
-
-
-
-
-[//]: # (#### Object Detection Performance)
-
-[//]: # (You may also consider adding in your performance metrics, but that is not required.)
-
-[//]: # ()
-[//]: # (## Final Project )
-
-[//]: # ()
-[//]: # (### 1. Tracking Steps)
-
-[//]: # (Write a short recap of the four tracking steps and what you implemented there &#40;filter, track management, association, camera fusion&#41;.)
-
-[//]: # (* Which results did you achieve?)
-
-[//]: # (* Which part of the project was most difficult for you to complete, and why?)
-
-[//]: # ()
-[//]: # (### 2. Comparison)
-
-[//]: # (Do you see any benefits in camera-lidar fusion compared to lidar-only tracking &#40;in theory and in your concrete results&#41;? )
-
-[//]: # ()
-[//]: # (### 3. Challenges)
-
-[//]: # (* Which challenges will a sensor fusion system face in real-life scenarios?)
-
-[//]: # (* Did you see any of these challenges in the project?)
-
-[//]: # ()
-[//]: # (### 4. Improvements)
-
-[//]: # (* Can you think of ways to improve your tracking results in the future?)
-
-[//]: # ()
