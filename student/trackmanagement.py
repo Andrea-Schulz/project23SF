@@ -115,7 +115,7 @@ class Trackmanagement:
                     track.score -= 1./params.window
 
         # track score threshold for tracks deletion
-        delete_threshold_non_confirmed = 0.1
+        delete_threshold_non_confirmed = 0.13
         delete_threshold_confirmed = params.delete_threshold
 
         # delete old tracks in case object is not anywhere inside a circle of 3m (max_P) or if score is below the defined thresholds

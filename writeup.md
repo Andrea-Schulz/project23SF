@@ -159,7 +159,6 @@ Other relevant files are:
 	* class `Measurement` with the attributes **z** and **R** for the measurement vector and corresponding covariance
 * `misc/params.py` includes all parameters for tracking (e.g. timestep, initialization parameters, track management settings, gating threshold)
 
-
 ### Results
 
 #### EKF Implementation
@@ -187,6 +186,18 @@ Other relevant files are:
 *Multi-target tracking performance given by the Root Mean Square Error (RMSE) in measurement sequence 1 (frames 50-100)*
 
 #### Sensor Fusion Implementation
+
+In the final implementation, it can be seen that for all ground truth objects, 
+our multi-target track management initializes, manages and deletes tracks as defined throughout the exercises:
+
+![](custom_plots/fusion_1.png)
+*Multi-target tracking with sensor fusion - output in measurement sequence 1*
+
+Two objects, managed as track 0 and track 1, are present in all frames of the chosen measurement sequence 1, 
+with a tracking performance of 0.12 and 0.07 m, respectively:
+
+![](custom_plots/fusion_2.png)
+*Multi-target tracking with sensor fusion - performance in measurement sequence 1*
 
 ### Evaluation
 

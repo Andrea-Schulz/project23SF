@@ -109,10 +109,7 @@ class Association:
         p = params.gating_threshold  # gating threshold
         df = sensor.dim_meas         # degrees of freedom
         # check if measurement lies inside gate using chi
-        if MHD <= chi2.ppf(p, df):
-            return True
-        else:
-            return False
+        return MHD < chi2.ppf(p, df)
         
     def MHD(self, track, meas, KF):
         # get matrices
