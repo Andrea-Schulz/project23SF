@@ -53,7 +53,7 @@ import misc.params as params
     # exec_tracking options: 'perform_tracking'
     # exec_visualization options: 'show_range_image', 'show_bev', 'show_pcl', 'show_labels_in_image', 'show_objects_and_labels_in_bev', 'show_objects_in_bev_labels_in_camera', 'show_tracks', 'show_detection_performance', 'make_tracking_movie'
     # configs_det options: 'darknet', 'fpn_resnet'
-exercise = 'ID_S4_EX3'
+exercise = 'final_step1'
 if exercise == 'ID_S1_EX1':
     data_filename = 'training_segment-1005081002024129653_5313_150_5333_150_with_camera_labels.tfrecord'  # Sequence 1
     show_only_frames = [0, 1]  # show only frames in interval for debugging
@@ -95,6 +95,16 @@ if exercise == 'ID_S4_EX3':
     configs_det = det.load_configs(model_name="fpn_resnet")
     # uncomment the following line for validating the calculations
     # configs_det.use_labels_as_objects = True
+if exercise == 'final_step1':
+    data_filename = 'training_segment-10072231702153043603_5725_000_5745_000_with_camera_labels.tfrecord'  # Sequence 2
+    show_only_frames = [150, 200]  # show only frames in interval for debugging
+    exec_data, exec_detection, exec_tracking, exec_visualization = [], \
+                                                                   [], \
+                                                                   ['perform_tracking'], \
+                                                                   ['show_tracks']
+    configs_det = det.load_configs(model_name="fpn_resnet") # Darknet not applicable (does not estimate height)
+    configs_det.lim_y = [-5, 10] # limit y-range and remove other targets left and right of our target
+
 
 ## Prepare Waymo Open Dataset file for loading
 data_fullpath = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'dataset', data_filename) # adjustable path in case this script is called from another working directory
@@ -104,7 +114,8 @@ datafile_iter = iter(datafile)  # initialize dataset iterator
 
 ## Initialize object detection
 model_det = det.create_model(configs_det)
-configs_det.use_labels_as_objects = True # set to True: use groundtruth labels as objects (False: use model-based detection)
+# set to True: use groundtruth labels as objects (False: use model-based detection)
+configs_det.use_labels_as_objects = True
 
 ## Uncomment this setting to restrict the y-range in the final project
 # configs_det.lim_y = [-25, 25] 

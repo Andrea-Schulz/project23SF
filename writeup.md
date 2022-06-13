@@ -160,28 +160,42 @@ Other relevant files are:
 * `misc/params.py` includes all parameters for tracking (e.g. timestep, initialization parameters, track management settings, gating threshold)
 
 
-### 1. Tracking Steps
+### Results
+
+#### EKF Implementation
+
+![](custom_plots/Filter_1.png)
+*object bounding box in camera view using an EKF in measurement sequence 2*
+
+![](custom_plots/Filter_2.png)
+*respective EKF performance given by the Root Mean Square Error (RMSE) in measurement sequence 2*
+
+#### Track Management Implementation
+
+#### Single Nearest Neighbour (SNN) Data Association & Gating Implementaion
+
+#### Sensor Fusion Implementation
+
+### Evaluation
+
+#### 1. Tracking Steps
 
 Write a short recap of the four tracking steps and what you implemented there (filter, track management, association, camera fusion).
 
 * Which results did you achieve?
-
 * Which part of the project was most difficult for you to complete, and why?
 
-
-### 2. Comparison
+#### 2. Comparison
 
 Do you see any benefits in camera-lidar fusion compared to lidar-only tracking (in theory and in your concrete results)? 
 
-
-### 3. Challenges
+#### 3. Challenges
 
 Which challenges will a sensor fusion system face in real-life scenarios?
 
 Did you see any of these challenges in the project?
 
-
-### 4. Improvements
+#### 4. Improvements
 
 Can you think of ways to improve your tracking results in the future?
 
