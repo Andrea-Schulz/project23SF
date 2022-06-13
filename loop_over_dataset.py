@@ -53,7 +53,7 @@ import misc.params as params
     # exec_tracking options: 'perform_tracking'
     # exec_visualization options: 'show_range_image', 'show_bev', 'show_pcl', 'show_labels_in_image', 'show_objects_and_labels_in_bev', 'show_objects_in_bev_labels_in_camera', 'show_tracks', 'show_detection_performance', 'make_tracking_movie'
     # configs_det options: 'darknet', 'fpn_resnet'
-exercise = 'final_step2'
+exercise = 'final_step3'
 if exercise == 'ID_S1_EX1':
     data_filename = 'training_segment-1005081002024129653_5313_150_5333_150_with_camera_labels.tfrecord'  # Sequence 1
     show_only_frames = [0, 1]  # show only frames in interval for debugging
@@ -113,6 +113,15 @@ if exercise == 'final_step2':
                                                                    ['show_tracks']
     configs_det = det.load_configs(model_name="fpn_resnet") # Darknet not applicable (does not estimate height)
     configs_det.lim_y = [-5, 15] # limit y-range and remove other targets left and right of our target
+if exercise == 'final_step3':
+    data_filename = 'training_segment-1005081002024129653_5313_150_5333_150_with_camera_labels.tfrecord'  # Sequence 1
+    show_only_frames = [50, 100]  # show only frames in interval for debugging
+    exec_data, exec_detection, exec_tracking, exec_visualization = [], \
+                                                                   [], \
+                                                                   ['perform_tracking'], \
+                                                                   ['show_tracks']
+    configs_det = det.load_configs(model_name="fpn_resnet") # Darknet not applicable (does not estimate height)
+    configs_det.lim_y = [-25, 25] # limit y-range and remove other targets left and right of our target
 
 ## Prepare Waymo Open Dataset file for loading
 data_fullpath = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'dataset', data_filename) # adjustable path in case this script is called from another working directory
