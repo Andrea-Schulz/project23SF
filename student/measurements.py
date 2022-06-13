@@ -160,6 +160,8 @@ class Measurement:
             self.z = np.zeros((sensor.dim_meas, 1))  # measurement vector
             self.z[0] = z[0]
             self.z[1] = z[1]
+            # initialize sensor
+            self.sensor = sensor
             # initialize R - measurement noise covariance matrix
             self.R = np.matrix([[sigma_cam_i**2, 0.0],
                                 [0.0, sigma_cam_j**2]])

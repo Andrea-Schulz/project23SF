@@ -53,7 +53,7 @@ import misc.params as params
     # exec_tracking options: 'perform_tracking'
     # exec_visualization options: 'show_range_image', 'show_bev', 'show_pcl', 'show_labels_in_image', 'show_objects_and_labels_in_bev', 'show_objects_in_bev_labels_in_camera', 'show_tracks', 'show_detection_performance', 'make_tracking_movie'
     # configs_det options: 'darknet', 'fpn_resnet'
-exercise = 'final_step4'
+exercise = 'final_step3'
 if exercise == 'ID_S1_EX1':
     data_filename = 'training_segment-1005081002024129653_5313_150_5333_150_with_camera_labels.tfrecord'  # Sequence 1
     show_only_frames = [0, 1]  # show only frames in interval for debugging

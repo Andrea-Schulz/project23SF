@@ -131,6 +131,9 @@ If a vehicle is captured from the side by the LiDAR, wheel rims are distinguisha
 
 ## Final Project: Sensor Fusion and Object Tracking
 
+![](custom_plots/my_tracking_results.gif)
+*Animation for multi-target tracking with sensor fusion in measurement sequence 1*
+
 The mid-term project is divided into 4 sections:
 * Implementing an extended Kalman filter (EKF)
 * Implementing a track management including track state and track score, track initialization and deletion
@@ -159,25 +162,67 @@ Other relevant files are:
 	* class `Measurement` with the attributes **z** and **R** for the measurement vector and corresponding covariance
 * `misc/params.py` includes all parameters for tracking (e.g. timestep, initialization parameters, track management settings, gating threshold)
 
-### Results
+### Implementation Steps & Results
+
+
 
 #### EKF Implementation
+
+In this step, we implemented an Extended Kalman Filter (EKF) to track a single real-world target with lidar measurement input over time.
+
+In particular, we extended the EKF algorithm from the course exercises to **3D space**, 
+taking into account also the height "z" (in vehicle coordinates).
+Hence, the tracking problem was given by:
+* a 6x1 state vector x = (px, py, pz, vx, vy, vz) and 6x6 System Matrix F
+* a linear measurement function h(x) = H * x for the lidar sensor, with H being a 3x6 matrix
+
+The `update()` and `predict()` functions of the EKF were implemented using the generic expression `γ = z - h(x)`.
+This way, the implementation could directly be applied to the nonlinear camera model later on.
 
 ![](custom_plots/Filter_1.png)
 *object bounding box in camera view using an EKF in measurement sequence 2*
 
-![](custom_plots/Filter_2.png)
+![](custom_plots/Filter_2_final.png)
 *respective Tracking performance given by the Root Mean Square Error (RMSE) in measurement sequence 2*
 
 #### Track Management Implementation
 
+In the second step, we implemented the track management module to initialize and delete tracks, 
+set a track state and a track score. This module enables the EKF to track multiple objects simultaneously.
+This is achieved by assigning and managing (i.e. evaluating and, if necessary, deleting) detected objects to so-called tracks.
+
+Again, the implementation was at first limited to tracking a single target using the lidar.
+
+The basic approach of the track management module is to assign a **track score**, i.e. an existence probability, 
+to a detected object, in order distinguish "ghost detections/clutters" (FP) from true positives (TP).
+Based on that score, the track is assigned a **state** ('initialized', 'tentative' or 'confirmed').
+
+Track deletion was then implemented using a heuristic working with this score and state.
+For deleting tracks, we mostly used the parameters from the course exercises: 
+a score threshold and the position uncertainty P in the x-y-plane, set to a 3m radius.
+
+While the threshold score for confirmed tracks was kept at 0.6, 
+the threshold for initialized or tentative tracks was lowered to 0.1 to allow for new tracks to be initialized properly.
+
 ![](custom_plots/Trackmanagement_1.png)
 *confirmed object in camera view using Track Management in measurement sequence 2*
 
-![](custom_plots/Trackmanagement_2.png)
+![](custom_plots/Trackmanagement_2_final.png)
 *respective Tracking performance given by the Root Mean Square Error (RMSE) in measurement sequence 2*
 
 #### Single Nearest Neighbour (SNN) Data Association & Gating Implementation
+
+In the third step, we extended our tracking algorithm with a single nearest neighbour association (SNN)
+and applied it to multiple targets.
+
+The implemented association module is based on **Mahalanobis distances**.
+This approach iteratively maps the closest measurement and track together using their position uncertainty 
+(i.e. the residual γ and the estimation error covariance in measurement space S).
+
+This is achieved using an **association matrix A** containing the Mahalanobis distances. 
+For each frame, A is used to create a 1:1 mapping between measurements and existing tracks, 
+until no more matches are possible.
+Furthermore, a gating method with a chi-square-distribution was implemented to reduce complexity.
 
 ![](custom_plots/SNN_1.png)
 *Multi-target tracking using SNN and gating in measurement sequence 1 (frames 50-100)*
@@ -187,8 +232,14 @@ Other relevant files are:
 
 #### Sensor Fusion Implementation
 
+In the final step, we implemented the nonlinear camera model and included the camera's field of view (FOV), 
+thus enabling a full camera-lidar sensor fusion within our multi target tracking algorithm.
+The tracking loop now updates all tracks with lidar measurements, then with camera measurements.
+
+Within the EKF, the nonlinearity of the measurement function h(x) must now be taken into account.
+
 In the final implementation, it can be seen that for all ground truth objects, 
-our multi-target track management initializes, manages and deletes tracks as defined throughout the exercises:
+our multi-target track management initializes, manages and deletes tracks as defined in the previous exercises:
 
 ![](custom_plots/fusion_1.png)
 *Multi-target tracking with sensor fusion - output in measurement sequence 1*
@@ -201,24 +252,55 @@ with a tracking performance of 0.12 and 0.07 m, respectively:
 
 ### Evaluation
 
-#### 1. Tracking Steps
+#### Implementation
 
-Write a short recap of the four tracking steps and what you implemented there (filter, track management, association, camera fusion).
+During implementation, debugging was the most time-consuming part. Careful consideration 
+had to be paid to the coordinate transformations between sensor and vehicle space.
+Implementing the sensor fusion system step-by-step helped to to identify error sources.
 
-* Which results did you achieve?
-* Which part of the project was most difficult for you to complete, and why?
+The course exercises however made me feel well-prepared for implementing the overall approach.
 
-#### 2. Comparison
+#### Do you see any benefits in camera-lidar fusion compared to lidar-only tracking (in theory and in your concrete results)? 
 
-Do you see any benefits in camera-lidar fusion compared to lidar-only tracking (in theory and in your concrete results)? 
+Fusing the detection results from different sensors, each with their own strength, leads to a more
+robust and reliable object detection.
 
-#### 3. Challenges
+Vehicles might not be detected by the camera at all due to occlusions or adverse light conditions, 
+whereas there might be false positives in the lidar measurements due to high reflectivity of an object in the environment.
 
-Which challenges will a sensor fusion system face in real-life scenarios?
+For self-driving car applications, this improved robustness is an absolute must 
+in order to achieve a high enough object detection performance to fulfill safety regulations and 
+perform correctly in many different situations. 
 
-Did you see any of these challenges in the project?
+#### Which challenges will a sensor fusion system face in real-life scenarios?
 
-#### 4. Improvements
+In real world scenarios, the behaviour of dynamic objects is very complex to model.
+We chose a rather general motion model here, 
+which might be oversimplified for some use cases (urban environment vs. highway).
 
-Can you think of ways to improve your tracking results in the future?
+Furthermore, we only applied our algorithm to the detection of vehicles. 
+Other dynamic objects such as bycicles or pedestrians might require more complex motion models and 
+parameterization for the SDC to react accordingly 
+(e.g. not to perform an emergency braking for a pedestrian standing at a red light, 
+but performing one for the child that suddenly steps on the road)
+
+#### Improvements
+
+As outlined in the course, there are multiple approaches to improve the sensor fusion approach.
+
+In our sensor fusion system, we chose a simple SNN approach for our track association module.
+This approach does not yield the global optimum of associations between measurements and tracks and 
+enforces a hard decision in ambiguous situations.
+More sophisticated algorithms mentioned in the course, such as GNN and PDA, could lead to improvements here.
+
+A nonlinear motion model which takes into account the restrictions of motion imposed on a vehicle (no sideways motion, road-wheel contact etc.),
+could yield better results in filtering and tracking.
+
+Within the EKF itself, the choice of parameters such as process and measurement noise covariances **Q** and **R** could be refined, 
+e.g. by conducting test drives or by using our results from the midterm project.
+Additionally, the time step **dt** could be chosen smaller,
+thus reducing the deviation between the prediction and measurements even for an inaccurate motion model.
+
+In general, the object detection algorithm could be optimized as well,
+which would relieve the sensor fusion system from handling to many false positive detections.
 

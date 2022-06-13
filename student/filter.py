@@ -70,7 +70,7 @@ class Filter:
         x = track.x + K * gamma                              # state update
         P = (np.identity(self.dim_state) - K * H) * track.P  # covariance update
 
-        track.update_attributes(meas)
+        # track.update_attributes(meas)
 
         # return updated state x and covariance P with associated measurement
         return track.set_x(x), track.set_P(P)
