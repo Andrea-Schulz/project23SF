@@ -201,7 +201,7 @@ def plot_rmse(manager, all_labels, configs_det):
                         error += (label.box.center_z - float(track.x[2]))**2
                         if error < min_error:
                             min_error = error
-            if min_error < np.inf:
+            if min_error < 1:
                 error = np.sqrt(min_error)
                 time.append(track.t)
                 rmse.append(error)     

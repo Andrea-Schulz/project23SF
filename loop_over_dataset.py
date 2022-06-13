@@ -119,7 +119,7 @@ if exercise == 'final_step3' or exercise == 'final_step4':
     exec_data, exec_detection, exec_tracking, exec_visualization = [], \
                                                                    [], \
                                                                    ['perform_tracking'], \
-                                                                   ['show_tracks', 'make_tracking_movie']
+                                                                   ['show_tracks']
     configs_det = det.load_configs(model_name="fpn_resnet") # Darknet not applicable (does not estimate height)
     configs_det.lim_y = [-25, 25] # limit y-range and remove other targets left and right of our target
 

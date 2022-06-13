@@ -202,7 +202,7 @@ For deleting tracks, we mostly used the parameters from the course exercises:
 a score threshold and the position uncertainty P in the x-y-plane, set to a 3m radius.
 
 While the threshold score for confirmed tracks was kept at 0.6, 
-the threshold for initialized or tentative tracks was lowered to 0.1 to allow for new tracks to be initialized properly.
+the threshold for initialized or tentative tracks was lowered to 0.1-0.15 to allow for new tracks to be initialized properly.
 
 ![](custom_plots/Trackmanagement_1.png)
 *confirmed object in camera view using Track Management in measurement sequence 2*
@@ -247,7 +247,7 @@ our multi-target track management initializes, manages and deletes tracks as def
 Two objects, managed as track 0 and track 1, are present in all frames of the chosen measurement sequence 1, 
 with a tracking performance of 0.12 and 0.07 m, respectively:
 
-![](custom_plots/fusion_2.png)
+![](custom_plots/fusion_2_final.png)
 *Multi-target tracking with sensor fusion - performance in measurement sequence 1*
 
 ### Evaluation
